@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login - Action Monitor</title>
+    <link href="/webjars/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body class="bg-dark text-light">
+<div class="container vh-100">
+    <div class="row h-100">
+        <div class="col my-auto">
+            <form name='login-form' action="/login" method='POST'>
+                <div class="alert alert-warning" style="display: none" role="alert" id="errorMsg">Invalid username or password!</div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input id="username" type="text" name="username" placeholder="Username" class="form-control"
+                           required/>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" name="password" placeholder="Password" class="form-control"
+                           required/>
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox" name="remember-me"> Remember me</label>
+                </div>
+                <button type="submit" class="btn btn-info form-control">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    let params = window.location.href.split('?').pop().split('&');
+    if(params.includes("error")) $("#errorMsg").fadeIn(600);
+</script>
+</body>
+</html>
