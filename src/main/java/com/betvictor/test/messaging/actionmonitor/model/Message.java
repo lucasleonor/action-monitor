@@ -1,11 +1,6 @@
 package com.betvictor.test.messaging.actionmonitor.model;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,12 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "message")
 public class Message {

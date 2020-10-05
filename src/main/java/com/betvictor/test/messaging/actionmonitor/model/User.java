@@ -1,11 +1,6 @@
 package com.betvictor.test.messaging.actionmonitor.model;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,15 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "user")
-public class User{
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,4 +22,5 @@ public class User{
     private String username;
     @Column(name = "password", nullable = false)
     private String password;
+
 }
