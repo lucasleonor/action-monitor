@@ -1,37 +1,35 @@
 package com.betvictor.test.messaging.actionmonitor.service;
 
 import com.betvictor.test.messaging.actionmonitor.dao.MessageDao;
-import com.betvictor.test.messaging.actionmonitor.dao.UserDao;
 import com.betvictor.test.messaging.actionmonitor.dto.MessageDTO;
 import com.betvictor.test.messaging.actionmonitor.model.Message;
 import com.betvictor.test.messaging.actionmonitor.model.User;
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
-
+@Slf4j
 @Service
 public class MessageService {
-    private final UserDao userDao;
-    private final MessageDao messageDao;
+    private final UserService userService;
+    private final MessageDao dao;
 
-    public MessageService(final UserDao userDao, final MessageDao messageDao) {
-        this.userDao = userDao;
-        this.messageDao = messageDao;
+    public MessageService(final UserService userService, final MessageDao dao) {
+        this.userService = userService;
+        this.dao = dao;
     }
 
     public void save(final MessageDTO dto) {
         Message message = convertDtoToModel(dto);
-        messageDao.save(message);
+        message = dao.save(message);
+        log.debug("Message {} saved", message.getId());
     }
 
     private Message convertDtoToModel(final MessageDTO dto) {
-        Optional<User> from = userDao.findUserByUsername(dto.getFrom());
-        Optional<User> to = userDao.findUserByUsername(dto.getTo());
+        User from = userService.findUserByUsername(dto.getFrom());
+        User to = userService.findUserByUsername(dto.getTo());
         Message message = new Message();
-        message.setFrom(from.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST)));
-        message.setTo(to.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST)));
+        message.setFrom(from);
+        message.setTo(to);
         message.setText(dto.getText());
         message.setDateTime(dto.getDateTime());
         return message;

@@ -5,7 +5,6 @@ import lombok.Data;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
-
 @Data
 public class MessageDTO implements Serializable {
     private String text;

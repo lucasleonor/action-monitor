@@ -1,5 +1,6 @@
 package com.betvictor.test.messaging.actionmonitor.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 @EnableScheduling
 public class UserController {
@@ -28,7 +30,8 @@ public class UserController {
 
     @MessageMapping(REGISTER)
     @Scheduled(fixedDelay = 3000)
-    public void sendAll() {
+    public void sendConnectedUsers() {
+        log.info("Sending users...");
         List<String> usernames = userRegistry.getUsers().stream().map(SimpUser::getName).collect(Collectors.toList());
         simpMessagingTemplate.convertAndSend(USERS, usernames);
     }

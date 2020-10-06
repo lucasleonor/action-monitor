@@ -2,6 +2,7 @@ package com.betvictor.test.messaging.actionmonitor.controller;
 
 import com.betvictor.test.messaging.actionmonitor.dto.MessageDTO;
 import com.betvictor.test.messaging.actionmonitor.service.MessageService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import java.security.Principal;
 
+@Slf4j
 @Controller
 public class MessageController {
 
@@ -26,7 +28,8 @@ public class MessageController {
     }
 
     @MessageMapping(CHAT)
-    public void sendSpecific(@Payload MessageDTO msg, Principal principal) {
+    public void sendMessage(@Payload MessageDTO msg, Principal principal) {
+        log.info("Message sent from '{}' to '{}' with text: {}", msg.getFrom(), msg.getTo(), msg.getText());
         msg.setFrom(principal.getName());
         service.save(msg);
         simpMessagingTemplate.convertAndSend(SPECIFIC_USER + msg.getTo(), msg);
