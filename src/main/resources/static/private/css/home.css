@@ -1,0 +1,66 @@
+:root {
+    --green: #86BB71;
+    --blue: #94C2ED;
+    --gray: #92959E;
+}
+
+.message-data {
+    margin-bottom: 15px;
+}
+
+.message-data-time {
+    color: var(--gray);
+    padding-left: 6px;
+}
+
+.message {
+    color: white;
+    padding: 18px 20px;
+    line-height: 26px;
+    font-size: 16px;
+    border-radius: 7px;
+    margin-bottom: 30px;
+    width: 90%;
+    position: relative;
+}
+.message::after {
+    bottom: 100%;
+    left: 7%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border: 10px solid transparent;
+    border-bottom-color: var(--green);
+    margin-left: -10px;
+}
+.my-message {
+    background: var(--green);
+}
+.my-message::after{
+    left: 93%;
+}
+
+.other-message {
+    background: var(--blue);
+}
+
+.other-message::after {
+    border-bottom-color: var(--blue);
+}
+
+#messagesRow{
+    min-height: 80%;
+    max-height: 80%;
+    overflow: auto;
+}
+
+#inputRow{
+    min-height: 20%;
+    max-height: 20%;
+}
+
+.userLabel:hover{
+    cursor: pointer;
+}
