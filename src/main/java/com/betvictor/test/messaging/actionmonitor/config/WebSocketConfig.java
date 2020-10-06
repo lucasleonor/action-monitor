@@ -7,6 +7,8 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 import static com.betvictor.test.messaging.actionmonitor.controller.UserController.REGISTER;
+import static com.betvictor.test.messaging.actionmonitor.controller.MessageController.CHAT;
+import static com.betvictor.test.messaging.actionmonitor.controller.MessageController.SPECIFIC_USER;
 import static com.betvictor.test.messaging.actionmonitor.controller.UserController.USERS;
 
 @Configuration
@@ -15,12 +17,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker(USERS);
+        config.enableSimpleBroker(USERS, SPECIFIC_USER);
         config.setUserDestinationPrefix("/user");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint(REGISTER).withSockJS();
+        registry.addEndpoint(REGISTER, CHAT).withSockJS();
     }
 }

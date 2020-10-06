@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
 @Entity
@@ -18,13 +18,13 @@ import java.time.LocalDateTime;
 public class Message {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
-    @Column(name = "username", nullable = false)
+    @Column(name = "text", nullable = false)
     private String text;
     @Column(name = "datetime", nullable = false)
-    private LocalDateTime dateTime;
+    private ZonedDateTime dateTime;
 
     @ManyToOne
     @JoinColumn(name = "send_to")
