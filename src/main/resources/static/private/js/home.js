@@ -7,11 +7,11 @@ $(document).ready(function () {
     disableMessaging();
     $('#username').html(user);
     console.log("connecting to chat...")
-    let socket = new SockJS('/private/register');
+    let socket = new SockJS('/private/sockets');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log("connected to: " + frame);
-        stompClient.subscribe("/private/users", function (response) {
+        stompClient.subscribe("/private/sockets/users", function (response) {
             console.log('updating users');
             let data = JSON.parse(response.body);
             let userList = $('#users');
@@ -25,8 +25,8 @@ $(document).ready(function () {
                 disableMessaging();
             }
         });
-        stompClient.send("/private/register", {}, "{}");
-        stompClient.subscribe("/private/user/queue/specific-user/" + user, function (response) {
+        stompClient.send("/private/sockets/register", {}, "{}");
+        stompClient.subscribe("/private/sockets/user/queue/specific-user/" + user, function (response) {
             console.log('receiving message');
             let msg = JSON.parse(response.body);
             msg.dateTime = new Date(msg.dateTime);
@@ -55,7 +55,7 @@ function sendMsg() {
             dateTime: new Date()
         };
         console.log('Sending message:' + message);
-        stompClient.send("/private/chat", {}, JSON.stringify(message));
+        stompClient.send("/private/sockets/chat", {}, JSON.stringify(message));
         appendMessage(message, false);
     }
 }

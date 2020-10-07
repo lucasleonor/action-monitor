@@ -11,12 +11,14 @@ import org.springframework.stereotype.Controller;
 
 import java.security.Principal;
 
+import static com.betvictor.test.messaging.actionmonitor.config.WebSocketConfig.SOCKETS;
+
 @Slf4j
 @Controller
 public class MessageController {
 
-    public static final String CHAT = "/private/chat";
-    public static final String SPECIFIC_USER = "/private/user/queue/specific-user/";
+    public static final String CHAT = SOCKETS + "/chat";
+    public static final String SPECIFIC_USER = SOCKETS + "/user/queue/specific-user/";
 
     private final MessageService service;
     private final SimpMessagingTemplate simpMessagingTemplate;

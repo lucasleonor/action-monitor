@@ -13,13 +13,15 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.betvictor.test.messaging.actionmonitor.config.WebSocketConfig.SOCKETS;
+
 @Slf4j
 @Controller
 @EnableScheduling
 public class UserController {
     private final SimpUserRegistry userRegistry;
-    public static final String REGISTER = "/private/register";
-    public static final String USERS = "/private/users";
+    public static final String REGISTER = SOCKETS + "/register";
+    public static final String USERS = SOCKETS + "/users";
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
@@ -31,7 +33,7 @@ public class UserController {
     @MessageMapping(REGISTER)
     @Scheduled(fixedDelay = 3000)
     public void sendConnectedUsers() {
-        log.info("Sending users...");
+        log.debug("Sending users...");
         List<String> usernames = userRegistry.getUsers().stream().map(SimpUser::getName).collect(Collectors.toList());
         simpMessagingTemplate.convertAndSend(USERS, usernames);
     }
